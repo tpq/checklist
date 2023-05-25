@@ -1,0 +1,22 @@
+Package: checklist
+Type: Package
+Title: Eliminate Features and Make a Checklist
+Version: 0.1.0
+Author: Thom Quinn <contacttomquinn@gmail.com>
+Maintainer: Thom Quinn <contacttomquinn@gmail.com>
+Description: At its core, checklist is a base-R implementation of recursive feature
+    elimination (RFE), a search algorithm that seeks to identify a minimal set of
+    features that minimise the total loss of a fitted model. The algorithm is
+    written in a generic way so that it can use any user-defined loss function
+    that takes the arguments 'x' and 'y' and returns a numeric value.
+    In 'checklist', we define a checklist as a linear model with integer
+    coefficients. When coefficients are integers, it is feasible for a human
+    to calculate predictions "by hand". When the number of features are few,
+    the model is easy to interpret and thus easy to implement in practice.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Depends:
+    stats
