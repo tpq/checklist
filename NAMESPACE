@@ -2,6 +2,9 @@
 
 S3method(predict,checklist)
 export(checklist)
+export(make_checklist_loss)
 export(rfe)
 importFrom(stats,coefficients)
+importFrom(stats,cor)
 importFrom(stats,lm)
+importFrom(stats,predict)

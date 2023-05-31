@@ -3,11 +3,14 @@
 \name{checklist}
 \alias{checklist}
 \alias{predict.checklist}
+\alias{make_checklist_loss}
 \title{Make A Checklist}
 \usage{
-checklist(x, y, u = 5)
+checklist(x, y, u = 5, simplify = TRUE)
 
 \method{predict}{checklist}(object, x, ...)
+
+make_checklist_loss(u)
 }
 \arguments{
 \item{x}{The independent variables (called features). Typically a matrix.}
@@ -19,6 +22,10 @@ Increasing this number will provide greater resolution,
 but less interpretability.
 Decreasing this number will provide less resolution,
 but greater interpretability.}
+
+\item{simplify}{A boolean. Toggles whether to remove coefficients that
+have zero weight after being converted to an integer.
+Set TRUE by default.}
 
 \item{object}{A checklist object.}
 
