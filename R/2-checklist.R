@@ -17,16 +17,24 @@
 #'  but less interpretability.
 #'  Decreasing this number will provide less resolution,
 #'  but greater interpretability.
+#' @param simplify A boolean. Toggles whether to remove coefficients that
+#'  have zero weight after being converted to an integer.
+#'  Set TRUE by default.
 #' @return A checklist object.
 #'
 #' @rdname checklist
-#' @importFrom stats coefficients lm
+#' @importFrom stats coefficients lm cor predict
 #' @export
 checklist <-
-  function(x, y, u = 5) {
+  function(x, y, u = 5, simplify = TRUE) {
     y = scale(y)
     m = lm(y ~ ., data.frame(x, y))
     pt = m_to_integer_coef(m, u)
+    pt[is.na(pt)] = 0
+
+    if (simplify) {
+      pt = pt[pt != 0]
+    }
 
     res = list(x = x,
                y = y,
@@ -42,10 +50,30 @@ checklist <-
 #' @export
 predict.checklist <-
   function(object, x, ...) {
+    if (is.null(colnames(x))) {
+      colnames(x) <- paste0("X", 1:ncol(x))
+    }
+
+    TRAIN_COLS <- names(object$points)
+    if (!all(TRAIN_COLS %in% colnames(x))) {
+      stop("Columns not found in new data.")
+    }
+
     x_wt <-
-      sweep(x, 2, object$points, "*") # multiply each row by the weight
+      sweep(x[, TRAIN_COLS, drop = FALSE], 2, object$points, "*") # multiply each row by the weight
     yhat <- rowSums(x_wt)
     return(yhat)
+  }
+
+#' @rdname checklist
+#' @export
+make_checklist_loss <-
+  function(u) {
+    return(function(x, y) {
+      chk = checklist(x, y, u)
+      yhat = predict(chk, x)
+      1 - cor(yhat, y, method = "spearman")
+    })
   }
 
 m_to_integer_coef <-

@@ -73,7 +73,7 @@ rfe <-
         for (j in 1:NCOLS) {
           if (verbose)
             cat(j, "... ")
-          x <<- master_x[, -j, drop = F] # eliminate a column
+          x <<- master_x[,-j, drop = F] # eliminate a column
           perf_after_elim[j] = deploy()
         }
         if (verbose)
@@ -88,7 +88,7 @@ rfe <-
         history <<- c(history, colnames(x)[least_important])
         history_coef <<-
           c(history_coef, current_loss[least_important])
-        x <<- x[, -least_important, drop = F]
+        x <<- x[,-least_important, drop = F]
       }
 
     main <-
