@@ -1,7 +1,7 @@
 Package: checklist
 Type: Package
 Title: Eliminate Features and Make a Checklist
-Version: 0.1.0
+Version: 0.1.1
 Author: Thom Quinn <contacttomquinn@gmail.com>
 Maintainer: Thom Quinn <contacttomquinn@gmail.com>
 Description: At its core, checklist is a base-R implementation of recursive feature
